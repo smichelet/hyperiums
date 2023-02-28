@@ -1,0 +1,23 @@
+body {
+  overflow: hidden;
+}
+
+.cell-coord {
+  border: none;
+  color: #000000;
+  font-weight: bold;
+  vertical-align: top;
+}
+
+.grid {
+  font-family: sans-serif;
+  font-size: 10px;
+  text-align: left;
+}
+
+td {
+  border: 1px solid #999999;
+  margin: none;
+  text-align: left;
+  color: #b64509;
+}

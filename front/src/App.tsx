@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import './App.css';
+import { TransformWrapper, TransformComponent } from 'react-zoom-pan-pinch';
 
 function App() {
   const [planets, setPlanets] = useState([]);
@@ -24,10 +26,11 @@ function App() {
         // Vérifier si la cellule contient des planètes
         if (planets[x] && planets[x][y]) {
           const cell = (
-            <td key={`${x},${y}`}>
+            <td key={`${x},${y}`} className="cell">
+              <tr className="cell-coord">({x}, {y})</tr>
               {planets[x][y].map(planet => (
                 <div key={planet.name} id={planet.name}>
-                  <p>{planet.name} ({planet.x}, {planet.y})</p>
+                  <p>{planet.name}</p>
                   {/* Ajoutez ici les autres informations de la planète */}
                 </div>
               ))}
@@ -47,13 +50,21 @@ function App() {
   }
 
   return (
-    <div>
-      <table>
-        <tbody>
-          {renderGrid()}
-        </tbody>
+      <table className="grid">
+        <TransformWrapper
+          centerOnInit={true}
+          initialScale={0.5}
+          limitToBounds={false}
+          minScale={0.05}
+          maxScale={3}
+        >
+          <TransformComponent>
+            <tbody className="tbody">
+                {renderGrid()}
+            </tbody>
+          </TransformComponent>
+        </TransformWrapper>
       </table>
-    </div>
   );
 }
 
