@@ -1,4 +1,4 @@
-body {
+/* body {
   overflow: hidden;
 }
 
@@ -21,3 +21,18 @@ td {
   text-align: left;
   color: #b64509;
 }
+
+.cell {
+  display: inline-block;
+  border: 1px solid black;
+}
+
+.cell-life {
+  border: 2px solid yellow;
+}
+
+.grid {
+  margin: 20px auto;
+  width: 1000px;
+  height: 1000px;
+} */

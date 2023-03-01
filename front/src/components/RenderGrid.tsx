@@ -61,7 +61,7 @@ const RenderGrid: React.FC = () => {
 
   return (
     <div>
-      <button onClick={toggleTag} style={{width: 200, height: 200}}>Toggle Tag</button>
+      <button onClick={toggleTag} style={{width: 200, height: 200}}>Display tags</button>
       <table style={{borderCollapse: 'collapse'}}>
         <tbody>
           {grid}
