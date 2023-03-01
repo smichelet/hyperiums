@@ -1,0 +1,93 @@
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import './App.css';
+
+function App() {
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function fetchData() {
+      const response = await axios.get('http://localhost:3030/planets');
+      setData(response.data);
+      setLoading(false);
+    }
+    fetchData();
+  }, []);
+
+  const CELL_SIZE = 50;
+  const WIDTH = 20;
+  const HEIGHT = 20;
+
+  const getCellStyle = (planet) => {
+    let style = { backgroundColor: 'white' };
+    if (planet.temperature < 273) {
+      style.backgroundColor = 'lightblue';
+    } else if (planet.temperature > 373) {
+      style.backgroundColor = 'red';
+    }
+    return style;
+  };
+
+  const getCellClass = (planet) => {
+    let className = '';
+    if (planet.hasLife) {
+      className = 'cell-life';
+    }
+    return className;
+  };
+
+  const getPlanetsAt = (x, y) => {
+    return data.filter((planet) => planet.x === x && planet.y === y);
+  };
+
+  const renderCell = (x, y) => {
+    const planets = getPlanetsAt(x, y);
+    return (
+      <div
+        key={`${x},${y}`}
+        className={`cell ${getCellClass(planets[0])}`}
+        style={{
+          width: CELL_SIZE,
+          height: CELL_SIZE,
+          ...getCellStyle(planets[0]),
+        }}
+      >
+        {planets.map((planet) => (
+          <div key={planet.name}>
+            <div>{planet.name}</div>
+            <div>Temperature: {planet.temperature}</div>
+          </div>
+        ))}
+      </div>
+    );
+  };
+
+  const renderRow = (y) => {
+    const cells = [];
+    for (let x = 0; x < WIDTH; x++) {
+      cells.push(renderCell(x, y));
+    }
+    return <div className="row">{cells}</div>;
+  };
+
+  const renderGrid = () => {
+    const rows = [];
+    for (let y = 0; y < HEIGHT; y++) {
+      rows.push(renderRow(y));
+    }
+    return <div className="grid">{rows}</div>;
+  };
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  return (
+    <div>
+      {renderGrid()}
+    </div>
+  );
+}
+
+export default App;
